@@ -9,7 +9,6 @@ export default async function connectToDb() {
       throw new Error('MONGO_URI is not set')
     }
   } catch (error) {
-    
     throw new Error(`Connection failed! ${error}`)
   }
 }

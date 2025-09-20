@@ -13,6 +13,18 @@ pnpm dev
 # or
 bun dev
 ```
+create an .env file and add keys :
+
+NEXT_PUBLIC_SERVER_URL=http:""
+GOOGLE_GENERATIVE_AI_API_KEY=""
+MONGO_URI=""
+NEXTAUTH_SECRET=""
+AUTH_GITHUB_ID=""
+AUTH_GITHUB_SECRET=""
+AUTH_GOOGLE_ID=""
+AUTH_GOOGLE_SECRET=""
+NEXTAUTH_URL=http://localhost:3000
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

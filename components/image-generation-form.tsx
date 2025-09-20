@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Loader2 } from "lucide-react";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { Loader2 } from 'lucide-react'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -14,50 +14,57 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
-import { generateImage } from "@/server/images";
-import Image from "next/image";
+} from '@/components/ui/form'
+import { Textarea } from '@/components/ui/textarea'
+import { useState } from 'react'
+import { generateImage } from '@/server/images'
+import Image from 'next/image'
 
 const formSchema = z.object({
   prompt: z.string(),
-});
+})
 
 export function ImageGenerationForm() {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      prompt: "",
+      prompt: '',
     },
-  });
+  })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      setIsLoading(true);
-      const image = await generateImage(values.prompt);
-      setImageUrl(image);
+      setIsLoading(true)
+      const image = await generateImage(values.prompt)
+      setImageUrl(image)
+      values.prompt = ''
     } catch (error) {
-      console.error(error);
+      console.error(error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
   return (
-    <>
+    <div className='border-2 p-8 rounded-lg shadow-xl'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className='space-y-8'
+        >
           <FormField
             control={form.control}
-            name="prompt"
+            name='prompt'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Prompt</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Enter your prompt here" {...field} />
+                  <Textarea
+                    placeholder='Enter your prompt here'
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>
                   This is your prompt for the image generation.
@@ -66,11 +73,14 @@ export function ImageGenerationForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isLoading}>
+          <Button
+            type='submit'
+            disabled={isLoading}
+          >
             {isLoading ? (
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2 className='size-4 animate-spin' />
             ) : (
-              "Generate"
+              'Generate'
             )}
           </Button>
         </form>
@@ -79,11 +89,11 @@ export function ImageGenerationForm() {
       {imageUrl && (
         <Image
           src={imageUrl}
-          alt="Generated Image"
+          alt='Generated Image'
           width={1000}
           height={1000}
         />
       )}
-    </>
-  );
+    </div>
+  )
 }

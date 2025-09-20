@@ -104,4 +104,3 @@ export const resetPassword = async (formData: FormData) => {
     redirect('/')
   }
 }
-
